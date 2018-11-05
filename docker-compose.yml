@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  redisdb:
+    image: redis
+    container_name: redisdb
+    restart: always
+    ports: 
+      - 6379:6379
+
+  redis-browser:
+    image: birkof/redis-browser
+    container_name: redis-browser
+    command: --url redis://redisdb:6379 -b 0.0.0.0
+    depends_on:
+      - redisdb
+    restart: always
+    ports:
+      - 4567:4567
