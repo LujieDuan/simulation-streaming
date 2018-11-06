@@ -4,13 +4,12 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 public class LiveDataset {
 
-    private BlockingDeque<Double> dataList;
+    private LinkedBlockingQueue<Double> dataList;
 
     private Consumer<String> logger;
 
@@ -30,7 +29,7 @@ public class LiveDataset {
     }
 
     public LiveDataset(Collection<Double> existing, Consumer<String>  logger) {
-        dataList = new LinkedBlockingDeque<>(existing);
+        dataList = new LinkedBlockingQueue<>(existing);
         this.logger = logger;
 
 
@@ -39,7 +38,7 @@ public class LiveDataset {
                 log("Connecting");
                 jedis = new Jedis(jedisServer, jedisPort);
                 log("subscribing");
-                sub = new Subscriber(logger);
+                sub = new Subscriber(dataList, logger);
                 jedis.subscribe(sub, channelName);
                 log("subscribe returned, closing down");
                 jedis.quit();
@@ -67,8 +66,8 @@ public class LiveDataset {
         return dataList.peek() == null;
     }
 
-    public double getNext() {
-        return dataList.poll();
+    public double getNext() throws InterruptedException {
+        return dataList.take();
     }
 
     public void stop() {

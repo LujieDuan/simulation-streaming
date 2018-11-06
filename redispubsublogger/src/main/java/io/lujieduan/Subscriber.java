@@ -1,4 +1,4 @@
-package io.lujieduan.ssclient;
+package io.lujieduan;
 
 import com.google.common.primitives.Doubles;
 import redis.clients.jedis.JedisPubSub;
@@ -11,15 +11,8 @@ public class Subscriber extends JedisPubSub {
 
     private Consumer<String>  logger;
 
-    private LinkedBlockingQueue<Double> queue;
-
-    public Subscriber(LinkedBlockingQueue<Double> queue) {
+    public Subscriber(Consumer<String> logger) {
         super();
-        this.queue = queue;
-    }
-
-    public Subscriber(LinkedBlockingQueue<Double> queue, Consumer<String> logger) {
-        this(queue);
         this.logger = logger;
     }
 
@@ -30,12 +23,12 @@ public class Subscriber extends JedisPubSub {
 
     @Override
     public void onUnsubscribe(String channel, int subscribedChannels) {
-        log("onUnsubscribe");
+            log("Unsubscribe [Channel] %s", channel);
     }
 
     @Override
     public void onSubscribe(String channel, int subscribedChannels) {
-        log("onSubscribe");
+        log("Subscribe [Channel] %s", channel);
     }
 
     @Override
@@ -52,10 +45,6 @@ public class Subscriber extends JedisPubSub {
 
     @Override
     public void onMessage(String channel, String message) {
-        log("Message received");
-        log(message);
-        Double c = Doubles.tryParse(message);
-        if (c != null)
-            queue.add(c);
+        log("Message Received [Channel] %s [Message]: %s", channel, message);
     }
 }

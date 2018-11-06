@@ -16,11 +16,17 @@ public class App
 
 
         try {
-			Thread.currentThread().sleep(100000);
+			Thread.currentThread().sleep(20000);
 		} catch(InterruptedException ie) {
 			ie.printStackTrace();
 		}
 
-		l.stop();
+        try {
+            System.out.println(l.getNext());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        l.stop();
     }
 }
