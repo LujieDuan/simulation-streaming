@@ -11,7 +11,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        LiveDataset l = new LiveDataset(ExternalLogger::log);
+        LiveDataset l = new LiveDataset("testchannel", ExternalLogger::log);
         System.out.println(l.needBlock());
 
 

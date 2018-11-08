@@ -24,9 +24,9 @@ public class App
     {
         System.out.println( "Redis Logger Started." );
 
-        String[] channels = {"Royal_University_Hospital_average",
-                            "Saskatoon_City_Hospital_average",
-                            "St_Pauls_Hospital_average"};
+        String[] channels = {"Royal_University_Hospital_patient",
+                            "Saskatoon_City_Hospital_patient",
+                            "St_Pauls_Hospital_patient"};
 
         jedisPool = new JedisPool(jedisServer, jedisPort);
 

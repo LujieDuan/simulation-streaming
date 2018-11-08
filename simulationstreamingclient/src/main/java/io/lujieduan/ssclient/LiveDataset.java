@@ -21,16 +21,17 @@ public class LiveDataset {
 
     private Subscriber sub;
 
-    private String channelName = "testchannel";
+    private String channelName;
 
     private void log(String string, Object... args) {
         if (this.logger != null)
             this.logger.accept(String.format(string, args));
     }
 
-    public LiveDataset(Collection<Double> existing, Consumer<String>  logger) {
+    public LiveDataset(String channel, Collection<Double> existing, Consumer<String>  logger) {
         dataList = new LinkedBlockingQueue<>(existing);
         this.logger = logger;
+        this.channelName = channel;
 
 
         new Thread(() -> {
@@ -49,16 +50,16 @@ public class LiveDataset {
         }, "subscriberThread").start();
     }
 
-    public LiveDataset() {
-        this(Collections.emptyList(), null);
+    public LiveDataset(String channel) {
+        this(channel, Collections.emptyList(), null);
     }
 
-    public LiveDataset(Consumer<String>  logger) {
-        this(Collections.emptyList(), logger);
+    public LiveDataset(String channel, Consumer<String>  logger) {
+        this(channel, Collections.emptyList(), logger);
     }
 
-    public LiveDataset(Collection<Double> existing) {
-        this(existing, null);
+    public LiveDataset(String channel, Collection<Double> existing) {
+        this(channel, existing, null);
     }
 
 
