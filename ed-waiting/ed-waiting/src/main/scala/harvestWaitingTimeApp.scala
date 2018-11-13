@@ -17,7 +17,7 @@ import java.util.Calendar
 import org.apache.spark.sql.functions.lit
 import com.redis._
 
-object SparkPseudoStreamingAndPersisting extends App {
+object harvestWaitingTimeApp extends App {
 
 
   val r = new RedisClient("localhost", 6379)
@@ -58,7 +58,7 @@ object SparkPseudoStreamingAndPersisting extends App {
     else
     {
 
-      publishToChannel("Royal_University_Hospital_patient", harvestData(0))
+      publishToChannel("Royal_University_Hospital_patient", if (harvestData(0) == "") "0.0" else harvestData(0))
       publishToChannel("Saskatoon_City_Hospital_patient", harvestData(3))
       publishToChannel("St_Pauls_Hospital_patient", harvestData(6))
 

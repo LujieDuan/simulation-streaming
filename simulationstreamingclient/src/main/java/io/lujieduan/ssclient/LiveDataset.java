@@ -4,6 +4,7 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
@@ -23,15 +24,21 @@ public class LiveDataset {
 
     private String channelName;
 
+    private LinkedList<Double> dataArray;
+
+    private Double timeUnit = 1.0;
+
     private void log(String string, Object... args) {
         if (this.logger != null)
             this.logger.accept(String.format(string, args));
     }
 
-    public LiveDataset(String channel, Collection<Double> existing, Consumer<String>  logger) {
+    public LiveDataset(String channel, double timeUnit, Collection<Double> existing, Consumer<String> logger) {
         dataList = new LinkedBlockingQueue<>(existing);
         this.logger = logger;
         this.channelName = channel;
+        this.timeUnit = timeUnit;
+        this.dataArray = new LinkedList<Double>();
 
 
         new Thread(() -> {
@@ -51,15 +58,27 @@ public class LiveDataset {
     }
 
     public LiveDataset(String channel) {
-        this(channel, Collections.emptyList(), null);
+        this(channel, 1.0, Collections.emptyList(), null);
+    }
+
+    public LiveDataset(String channel, double timeUnit) {
+        this(channel, timeUnit, Collections.emptyList(), null);
     }
 
     public LiveDataset(String channel, Consumer<String>  logger) {
-        this(channel, Collections.emptyList(), logger);
+        this(channel, 1.0, Collections.emptyList(), logger);
+    }
+
+    public LiveDataset(String channel, double timeUnit, Consumer<String>  logger) {
+        this(channel, timeUnit, Collections.emptyList(), logger);
     }
 
     public LiveDataset(String channel, Collection<Double> existing) {
-        this(channel, existing, null);
+        this(channel, 1.0, existing, null);
+    }
+
+    public LiveDataset(String channel, double timeUnit, Collection<Double> existing) {
+        this(channel, timeUnit, existing, null);
     }
 
 
@@ -68,7 +87,17 @@ public class LiveDataset {
     }
 
     public double getNext() throws InterruptedException {
-        return dataList.take();
+        double result = dataList.take();
+        dataArray.add(result);
+        return result;
+    }
+
+    public double getByTime(double timeIndex) throws InterruptedException {
+        int arrayIndex = (int) Math.ceil(timeIndex / timeUnit);
+        while (arrayIndex >= dataArray.size()) {
+            this.getNext();
+        }
+        return dataArray.get(arrayIndex);
     }
 
     public void stop() {
