@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BenchmarkKafkaProducer.iml" filepath="$PROJECT_DIR$/.idea/modules/BenchmarkKafkaProducer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/benchmarkkafkaproducer-build.iml" filepath="$PROJECT_DIR$/.idea/modules/benchmarkkafkaproducer-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BenchmarkKafkaProducer-build.iml" filepath="$PROJECT_DIR$/.idea/modules/BenchmarkKafkaProducer-build.iml" />
     </modules>
   </component>
 </project>
