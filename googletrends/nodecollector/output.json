@@ -1,0 +1,413 @@
+{
+    "default": {
+        "timelineData": [
+            {
+                "time": "1556928000",
+                "formattedTime": "May 4, 2019",
+                "formattedAxisTime": "May 4",
+                "value": [
+                    76
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "76"
+                ]
+            },
+            {
+                "time": "1557014400",
+                "formattedTime": "May 5, 2019",
+                "formattedAxisTime": "May 5",
+                "value": [
+                    87
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "87"
+                ]
+            },
+            {
+                "time": "1557100800",
+                "formattedTime": "May 6, 2019",
+                "formattedAxisTime": "May 6",
+                "value": [
+                    100
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "100"
+                ]
+            },
+            {
+                "time": "1557187200",
+                "formattedTime": "May 7, 2019",
+                "formattedAxisTime": "May 7",
+                "value": [
+                    67
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "67"
+                ]
+            },
+            {
+                "time": "1557273600",
+                "formattedTime": "May 8, 2019",
+                "formattedAxisTime": "May 8",
+                "value": [
+                    74
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "74"
+                ]
+            },
+            {
+                "time": "1557360000",
+                "formattedTime": "May 9, 2019",
+                "formattedAxisTime": "May 9",
+                "value": [
+                    73
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "73"
+                ]
+            },
+            {
+                "time": "1557446400",
+                "formattedTime": "May 10, 2019",
+                "formattedAxisTime": "May 10",
+                "value": [
+                    75
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "75"
+                ]
+            },
+            {
+                "time": "1557532800",
+                "formattedTime": "May 11, 2019",
+                "formattedAxisTime": "May 11",
+                "value": [
+                    58
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "58"
+                ]
+            },
+            {
+                "time": "1557619200",
+                "formattedTime": "May 12, 2019",
+                "formattedAxisTime": "May 12",
+                "value": [
+                    91
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "91"
+                ]
+            },
+            {
+                "time": "1557705600",
+                "formattedTime": "May 13, 2019",
+                "formattedAxisTime": "May 13",
+                "value": [
+                    81
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "81"
+                ]
+            },
+            {
+                "time": "1557792000",
+                "formattedTime": "May 14, 2019",
+                "formattedAxisTime": "May 14",
+                "value": [
+                    67
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "67"
+                ]
+            },
+            {
+                "time": "1557878400",
+                "formattedTime": "May 15, 2019",
+                "formattedAxisTime": "May 15",
+                "value": [
+                    75
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "75"
+                ]
+            },
+            {
+                "time": "1557964800",
+                "formattedTime": "May 16, 2019",
+                "formattedAxisTime": "May 16",
+                "value": [
+                    78
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "78"
+                ]
+            },
+            {
+                "time": "1558051200",
+                "formattedTime": "May 17, 2019",
+                "formattedAxisTime": "May 17",
+                "value": [
+                    71
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "71"
+                ]
+            },
+            {
+                "time": "1558137600",
+                "formattedTime": "May 18, 2019",
+                "formattedAxisTime": "May 18",
+                "value": [
+                    56
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "56"
+                ]
+            },
+            {
+                "time": "1558224000",
+                "formattedTime": "May 19, 2019",
+                "formattedAxisTime": "May 19",
+                "value": [
+                    69
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "69"
+                ]
+            },
+            {
+                "time": "1558310400",
+                "formattedTime": "May 20, 2019",
+                "formattedAxisTime": "May 20",
+                "value": [
+                    57
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "57"
+                ]
+            },
+            {
+                "time": "1558396800",
+                "formattedTime": "May 21, 2019",
+                "formattedAxisTime": "May 21",
+                "value": [
+                    54
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "54"
+                ]
+            },
+            {
+                "time": "1558483200",
+                "formattedTime": "May 22, 2019",
+                "formattedAxisTime": "May 22",
+                "value": [
+                    63
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "63"
+                ]
+            },
+            {
+                "time": "1558569600",
+                "formattedTime": "May 23, 2019",
+                "formattedAxisTime": "May 23",
+                "value": [
+                    87
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "87"
+                ]
+            },
+            {
+                "time": "1558656000",
+                "formattedTime": "May 24, 2019",
+                "formattedAxisTime": "May 24",
+                "value": [
+                    71
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "71"
+                ]
+            },
+            {
+                "time": "1558742400",
+                "formattedTime": "May 25, 2019",
+                "formattedAxisTime": "May 25",
+                "value": [
+                    62
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "62"
+                ]
+            },
+            {
+                "time": "1558828800",
+                "formattedTime": "May 26, 2019",
+                "formattedAxisTime": "May 26",
+                "value": [
+                    74
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "74"
+                ]
+            },
+            {
+                "time": "1558915200",
+                "formattedTime": "May 27, 2019",
+                "formattedAxisTime": "May 27",
+                "value": [
+                    60
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "60"
+                ]
+            },
+            {
+                "time": "1559001600",
+                "formattedTime": "May 28, 2019",
+                "formattedAxisTime": "May 28",
+                "value": [
+                    51
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "51"
+                ]
+            },
+            {
+                "time": "1559088000",
+                "formattedTime": "May 29, 2019",
+                "formattedAxisTime": "May 29",
+                "value": [
+                    75
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "75"
+                ]
+            },
+            {
+                "time": "1559174400",
+                "formattedTime": "May 30, 2019",
+                "formattedAxisTime": "May 30",
+                "value": [
+                    59
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "59"
+                ]
+            },
+            {
+                "time": "1559260800",
+                "formattedTime": "May 31, 2019",
+                "formattedAxisTime": "May 31",
+                "value": [
+                    66
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "66"
+                ]
+            },
+            {
+                "time": "1559347200",
+                "formattedTime": "Jun 1, 2019",
+                "formattedAxisTime": "Jun 1",
+                "value": [
+                    61
+                ],
+                "hasData": [
+                    true
+                ],
+                "formattedValue": [
+                    "61"
+                ]
+            }
+        ],
+        "averages": []
+    }
+}
