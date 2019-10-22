@@ -4,21 +4,15 @@
  Revision:
   Modified By: Lujie Duan 2018-11-06
   Publish the waiting time to a Redis channel instead of writing to csv files
+  Modified By: Lujie Duan 2019-10-22
+  Modified as now there are four possible ED rooms displayed on the websites; removed Spark components for stability
  */
-
+import java.io.{File, PrintWriter}
 import scala.io.Source
-import org.apache.spark.sql._
-import org.apache.spark.sql.Row
-import org.apache.spark.sql.types.DataTypes
-import org.apache.spark.sql.types.StructField
-import org.apache.spark.sql.types.StructType
-import org.apache.spark.rdd._
 import java.util.Calendar
-import org.apache.spark.sql.functions.lit
 import com.redis._
 
 object harvestWaitingTimeApp extends App {
-
 
   val r = new RedisClient("localhost", 6379)
 
@@ -26,72 +20,45 @@ object harvestWaitingTimeApp extends App {
     r.publish(channel, message)
   }
 
-
-  val sparkSession = SparkSession
-                    .builder()
-                    .appName("waitingTimeHTML")
-                    .config("spark.master", "local")
-                    .getOrCreate
-
-  import sparkSession.implicits._
-
-  val strHarvesterVersion = "4"
-  val countMinutesBetweenHarvests = 15
-  val countSecondsBetweenHarvests = 60 * countMinutesBetweenHarvests
-
   while (true)
   {
     val html = Source.fromURL("https://www.saskatoonhealthregion.ca/pages/emergency-wait-times.aspx", "ISO-8859-1").getLines.toStream
-    val pattern = Vector(raw"<td>([0-9]+):([0-9]+)</td>".r, raw"<td>([0-9]+)</td>".r, raw"<td>Closed</td>".r, raw"<td></td>".r, raw"<td>Closing Soon</td>".r)
-    val harvestDataRaw = for {
-        word <- html
-        regEx <- pattern
-        matches <- regEx.findAllIn(word)
-    } yield word
+    val table = "<table class=\"waittimetable\">((?!<table).)*</table>".r.findFirstIn(html.mkString
+                                                                          .replaceAll("\t", "")
+                                                                          .replaceAll("\n", "")
+                                                                          .replaceAll("\r", ""))
+    val lines = scala.xml.XML.loadString(table.get) \ "tbody" \ "tr"
+    val hospital_map = Map("JPCH Children's ED" -> "JPCH_Childrens_ED_patient",
+                            "Royal University Hospital Adult ED" -> "Royal_University_Hospital_patient",
+                            "Saskatoon City Hospital" -> "Saskatoon_City_Hospital_patient",
+                            "St Paul's Hospital" -> "St_Pauls_Hospital_patient")
 
-    val harvestData = harvestDataRaw.map(_ replaceAll (" ", "") replaceAll ("[<td>]", "") replaceAll ("/", "")).toVector
+    val now = Calendar.getInstance().getTime().toString
+    println(s"waiting list was harvested at $now")
 
-    if (harvestData.size == 0)
-    {
-      print("harvestData vector is: " + harvestData)
-    }
-    else
-    {
-
-      publishToChannel("Royal_University_Hospital_patient", if (harvestData(0) == "") "0.0" else harvestData(0))
-      publishToChannel("Saskatoon_City_Hospital_patient", harvestData(3))
-      publishToChannel("St_Pauls_Hospital_patient", harvestData(6))
-
-
-      val theRowUniversityV =Vector("Royal University Hospital", harvestData(0), harvestData(1), harvestData(2))
-      val theRowCityV =Vector("Saskatoon City Hospital", harvestData(3), harvestData(4), harvestData(5))
-      val theRowStPaulV =Vector("St Paul's Hospital", harvestData(6), harvestData(7), harvestData(8))
-
-      val vec = Vector(theRowUniversityV, theRowCityV, theRowStPaulV)
-
-      val harvestrdd = sparkSession.sparkContext.parallelize(vec).map(Row.fromSeq(_))
-
-      val schema = StructType(
-          Array(
-          StructField("Location", DataTypes.StringType),
-          StructField("Patients Waiting", DataTypes.StringType),
-          StructField("Average Wait (HH:MM)", DataTypes.StringType),
-          StructField("Longest Wait (HH:MM)", DataTypes.StringType))
-          )
-
-      val harvestDF = sparkSession.createDataFrame(harvestrdd, schema)
-
-      val now = Calendar.getInstance().getTime().toString
-
-      val harvestWithDateDF = harvestDF.withColumn("Harvest Time", lit(now))
-
-      println(s"waiting list was harvested at $now")
-
-      harvestWithDateDF.show
-
-      harvestWithDateDF.select("Location","Patients Waiting", "Average Wait (HH:MM)", "Longest Wait (HH:MM)", "Harvest Time").repartition(1).write.mode(org.apache.spark.sql.SaveMode.Append).csv(s"waitingtimelist/$strHarvesterVersion")
+    if (lines.length == 0) println("NO DATE")
+    else {
+      var result = "LOCATION, COUNT, AVERAGE TIME, LONGEST TIME\n"
+      lines.foreach(x => {
+        val cells = x \ "td"
+        if (cells.length == 4) {
+          val cell_values = cells.map(c => c.toString().replaceAll("<td class=\"location\">", "")
+                                                            .replaceAll("<td>", "")
+                                                            .replaceAll("</td>", "")
+                                                            .trim())
+          val channel_name = hospital_map(cell_values(0))
+          publishToChannel(channel_name, if (cell_values(1) == "") "0.0" else cell_values(1))
+          result = result + "\"" + cell_values(0) + "\"," + cell_values(1) + "," + cell_values(2) + "," + cell_values(3) + "\n"
+        }
+      })
+      println(result)
+      val pw = new PrintWriter(new File("./waitingtimelist/waiting-time-" + now + ".csv" ))
+      pw.write(result)
+      pw.close()
     }
 
+    val countMinutesBetweenHarvests = 15
+    val countSecondsBetweenHarvests = 60 * countMinutesBetweenHarvests
     Thread.sleep(countSecondsBetweenHarvests * 1000)
   }
 }
