@@ -1,0 +1,5 @@
+plotly==2.5.1
+dash==0.21.0
+dash_html_components==0.10.0
+dash_core_components==0.22.1
+redis==3.3.11
