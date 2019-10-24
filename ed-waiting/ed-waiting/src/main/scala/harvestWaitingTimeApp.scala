@@ -13,18 +13,27 @@ import java.util.Calendar
 import com.redis._
 
 object harvestWaitingTimeApp extends App {
+  var host = "localhost"
+  var port  = 6379
+  if (args.length >= 1) host = args(0)
+  if (args.length >= 2) port = args(1).toInt
 
-  val r = new RedisClient("localhost", 6379)
+  println("Connecting to " + host + ":" + port)
 
-  def publishToChannel(channel: String, message: String) = {
+  var r : RedisClient = _
+
+  var error_counter = 0
+
+  def publishToChannel(r: RedisClient, channel: String, message: String) = {
     r.publish(channel, message)
   }
 
   while (true)
   {
-    var error_counter = 0
     try 
     {
+      if (r == null)
+        r = new RedisClient(host, port)
       val html = Source.fromURL("https://www.saskatoonhealthregion.ca/pages/emergency-wait-times.aspx", "ISO-8859-1").getLines.toStream
       val table = "<table class=\"waittimetable\">((?!<table).)*</table>".r.findFirstIn(html.mkString
                                                                             .replaceAll("\t", "")
@@ -50,7 +59,7 @@ object harvestWaitingTimeApp extends App {
                                                               .replaceAll("</td>", "")
                                                               .trim())
             val channel_name = hospital_map(cell_values(0))
-            publishToChannel(channel_name, if (cell_values(1) == "") "0.0" else cell_values(1))
+            publishToChannel(r, channel_name, if (cell_values(1) == "") "0.0" else cell_values(1))
             result = result + "\"" + cell_values(0) + "\"," + cell_values(1) + "," + cell_values(2) + "," + cell_values(3) + "\n"
           }
         })
@@ -59,7 +68,6 @@ object harvestWaitingTimeApp extends App {
         pw.write(result)
         pw.close()
       }
-
       val countMinutesBetweenHarvests = 15
       val countSecondsBetweenHarvests = 60 * countMinutesBetweenHarvests
       Thread.sleep(countSecondsBetweenHarvests * 1000)
@@ -67,7 +75,7 @@ object harvestWaitingTimeApp extends App {
     catch 
     {
       case x: Exception => {
-        println("Error-" + error_counter + ": " + x.getMessage)
+        println("Error-" + error_counter + ": " + x.getStackTraceString + x.getMessage)
         error_counter += 1
         Thread.sleep(10000)
       }

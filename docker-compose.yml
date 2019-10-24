@@ -17,3 +17,11 @@ services:
     restart: always
     ports:
       - 4567:4567
+  edwaiting:
+    container_name: edwaiting
+    build:
+      context: ./ed-waiting    
+    command: redisdb 6379
+    depends_on:
+      - redisdb
+    restart: always
