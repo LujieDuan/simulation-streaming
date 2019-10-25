@@ -17,10 +17,28 @@ services:
     restart: always
     ports:
       - 4567:4567
+  webviz:
+    container_name: webviz
+    build: 
+      context: ./webviz
+    ports:
+      - "8050:8050"
+    command: redisdb 6379
+    depends_on:
+      - redisdb
+    restart: always
   edwaiting:
     container_name: edwaiting
     build:
       context: ./ed-waiting    
+    command: redisdb 6379
+    depends_on:
+      - redisdb
+    restart: always
+  redispubsublogger:
+    container_name: redispubsublogger
+    build: 
+      context: ./redispubsublogger
     command: redisdb 6379
     depends_on:
       - redisdb

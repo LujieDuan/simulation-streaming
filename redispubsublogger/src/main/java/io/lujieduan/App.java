@@ -11,14 +11,7 @@ import java.util.ArrayList;
  */
 public class App 
 {
-
-
-    private static String jedisServer = "localhost";
-
-    private static int jedisPort = 6379;
-
     private static JedisPool jedisPool;
-
 
     public static void main( String[] args )
     {
@@ -27,6 +20,13 @@ public class App
         String[] channels = {"Royal_University_Hospital_patient",
                             "Saskatoon_City_Hospital_patient",
                             "St_Pauls_Hospital_patient"};
+
+        String jedisServer = "localhost";
+        int jedisPort  = 6379;
+        if (args.length >= 1)
+            jedisServer = args[0];
+        if (args.length >= 2)
+            jedisPort = Integer.parseInt(args[1]);
 
         jedisPool = new JedisPool(jedisServer, jedisPort);
 

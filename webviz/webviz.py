@@ -9,10 +9,19 @@ from collections import deque
 import plotly.graph_objs as go
 import random
 import redis
+import sys
 
 app = dash.Dash('streaming-data-web-viz')
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+host = "localhost"
+port  = 6379
+if (len(sys.argv) >= 1):
+    host = sys.argv[1]
+if (len(sys.argv) >= 2):
+    port = int(sys.argv[2])
+
+r = redis.Redis(host=host, port=port, db=0)
+
 p = r.pubsub(ignore_subscribe_messages=True)
 
 max_queue_length = 5000
