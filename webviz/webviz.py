@@ -130,4 +130,4 @@ for js in external_css:
 
 # Start the Dash App
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
