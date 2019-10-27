@@ -64,6 +64,8 @@ object harvestWaitingTimeApp extends App {
           }
         })
         println(result)
+        var directory = new File("./waitingtimelist")
+        if (!directory.exists()) directory.mkdir()
         val pw = new PrintWriter(new File("./waitingtimelist/waiting-time-" + now + ".csv" ))
         pw.write(result)
         pw.close()

@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:8u222_1.3.3_2.12.10
+FROM hseeberger/scala-sbt:8u181_2.12.7_1.2.6
 
 WORKDIR /code
 
