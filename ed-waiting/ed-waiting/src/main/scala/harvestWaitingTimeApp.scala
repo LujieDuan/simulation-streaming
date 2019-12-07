@@ -57,6 +57,8 @@ object harvestWaitingTimeApp extends App {
             val cell_values = cells.map(c => c.toString().replaceAll("<td class=\"location\">", "")
                                                               .replaceAll("<td>", "")
                                                               .replaceAll("</td>", "")
+                                                              .replaceAll("<td/>", "")
+                                                              .replaceAll("Closed", "")
                                                               .trim())
             val channel_name = hospital_map(cell_values(0))
             publishToChannel(r, channel_name, if (cell_values(1) == "") "0.0" else cell_values(1))
