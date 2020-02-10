@@ -45,9 +45,9 @@ def get_count():
 	total_img.save("./Total-{0}-{1}".format(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), os.path.basename(report_img)) )
 	new_img.save("./New-{0}-{1}".format(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"), os.path.basename(report_img)) ) 
 
-	week = pytesseract.image_to_string(week_img)
-	total_count = pytesseract.image_to_string(total_img)
-	new_count = pytesseract.image_to_string(new_img)
+	week = pytesseract.image_to_string(week_img, config='--psm 7')
+	total_count = pytesseract.image_to_string(total_img, config='--psm 7')
+	new_count = pytesseract.image_to_string(new_img, config='--psm 7')
 
 	print("{} {} Total Cases: {}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), week, total_count))
 	print("{} {} New Cases: {}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), week, new_count))
