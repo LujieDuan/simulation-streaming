@@ -1,5 +1,7 @@
 FROM python:latest
 
+RUN apt update && apt install tesseract
+
 WORKDIR /code
 
 COPY ./requirements.txt /code
