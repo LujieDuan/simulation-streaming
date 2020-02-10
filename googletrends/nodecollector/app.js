@@ -1,3 +1,7 @@
+function calculateNewValue() {
+    return 0;
+}
+
 var config = require('./config');
 var fs = require("fs");
 var msg = 'Starting...';
@@ -51,3 +55,7 @@ client.hkeys("hash key", function (err, replies) {
     });
     client.quit();
 });
+
+// Send new value to the corresponding channel on Redis
+value = calculateNewValue();
+client.publish(config.channel, value);

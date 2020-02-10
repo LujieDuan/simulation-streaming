@@ -3,7 +3,7 @@ var config = {};
 config.keyword = 'Flu'
 config.start_time = new Date('2019-05-04')
 config.end_time = new Date('2019-06-01')
-
+config.channel = 'GT-CA-Flu-Daily'
 
 
 // config.twitter = {};
