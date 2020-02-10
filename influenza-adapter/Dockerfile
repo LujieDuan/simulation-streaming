@@ -1,6 +1,6 @@
 FROM python:latest
 
-RUN apt update && apt install tesseract
+RUN apt-get update && apt-get install tesseract-ocr -y 
 
 WORKDIR /code
 
