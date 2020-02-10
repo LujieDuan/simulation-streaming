@@ -64,6 +64,7 @@ if __name__ == "__main__":
 	if (len(sys.argv) >= 2):
 		port = int(sys.argv[2])
 
+	time.sleep(60)
 	redis_client = redis.Redis(host=host, port=port, db=0)
 	weeks = set()
 	while True:
@@ -74,4 +75,4 @@ if __name__ == "__main__":
 			redis_client.publish("Influenza-SK", r.new)
 			weeks.add(r.week)
 
-		time.sleep(2)
+		time.sleep(60*60*24)
