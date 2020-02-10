@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import time
 from datetime import datetime
-import os
+import os, sys
 from collections import namedtuple
 import redis
 
