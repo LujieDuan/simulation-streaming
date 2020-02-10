@@ -35,6 +35,14 @@ services:
     depends_on:
       - redisdb
     restart: always
+  influenzaadapter:
+    container_name: influenzaadapter
+    build:
+      context: ./influenza-adapter    
+    command: redisdb 6379
+    depends_on:
+      - redisdb
+    restart: always
   redispubsublogger:
     container_name: redispubsublogger
     build: 
