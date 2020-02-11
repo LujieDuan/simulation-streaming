@@ -20,7 +20,8 @@ public class App
         String[] channels = {"Royal_University_Hospital_patient",
                             "Saskatoon_City_Hospital_patient",
                             "St_Pauls_Hospital_patient", 
-                            "Influenza-SK"};
+                            "Influenza-SK", 
+                            "GT-Flu-Daily"};
 
         String jedisServer = "localhost";
         int jedisPort  = 6379;

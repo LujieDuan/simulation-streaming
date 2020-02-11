@@ -43,6 +43,15 @@ services:
     depends_on:
       - redisdb
     restart: always
+  googletrends:
+    image: node:12.4.0
+    container_name: googletrends
+    build:
+      context: ./googletrends
+    command: node /code/app.js
+    depends_on:
+      - redisdb
+    restart: always
   redispubsublogger:
     container_name: redispubsublogger
     build: 
