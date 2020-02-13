@@ -21,7 +21,8 @@ public class App
                             "Saskatoon_City_Hospital_patient",
                             "St_Pauls_Hospital_patient", 
                             "Influenza-SK", 
-                            "GT-Flu-Daily"};
+                            "GT-Flu-Daily",
+                            "Influenza-twitter"};
 
         String jedisServer = "localhost";
         int jedisPort  = 6379;

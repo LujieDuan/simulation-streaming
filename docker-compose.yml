@@ -35,6 +35,14 @@ services:
     depends_on:
       - redisdb
     restart: always
+  twittercounter:
+    container_name: twittercounter
+    build:
+      context: ./twitter-counter    
+    command: redisdb 6379
+    depends_on:
+      - redisdb
+    restart: always
   influenzaadapter:
     container_name: influenzaadapter
     build:
