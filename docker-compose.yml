@@ -9,8 +9,9 @@ services:
       - 6379:6379
 
   redis-browser:
-    image: birkof/redis-browser
     container_name: redis-browser
+    build:
+      context: ./docker-context
     command: --url redis://redisdb:6379 -b 0.0.0.0
     depends_on:
       - redisdb

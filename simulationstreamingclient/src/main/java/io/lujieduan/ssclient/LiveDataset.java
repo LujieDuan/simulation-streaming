@@ -51,7 +51,7 @@ public class LiveDataset {
                 log("subscribe returned, closing down");
                 jedis.quit();
             } catch (Exception e) {
-                log(">>> OH NOES Sub - " + e.getMessage());
+                log("[ERROR]" + e.getMessage());
                 e.printStackTrace();
             }
         }, "subscriberThread").start();
