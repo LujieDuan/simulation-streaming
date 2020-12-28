@@ -6,19 +6,16 @@ version := "0.1"
 scalaVersion := "2.12.7"
 
 
-// https://mvnrepository.com/artifact/org.apache.spark/spark-core
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.0"
-// https://mvnrepository.com/artifact/org.apache.spark/spark-sql
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.5"
-
-
-
-libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
-
-
-libraryDependencies ++= Seq(
-  "net.debasishg" %% "redisclient" % "3.8"
-)
+// https://mvnrepository.com/artifact/org.twitter4j/twitter4j-stream
+libraryDependencies += "org.twitter4j" % "twitter4j-stream" % "4.0.7"
+// https://mvnrepository.com/artifact/joda-time/joda-time
+libraryDependencies += "joda-time" % "joda-time" % "2.10.8"
+// https://mvnrepository.com/artifact/net.debasishg/redisclient
+libraryDependencies += "net.debasishg" %% "redisclient" % "3.8"
+// https://mvnrepository.com/artifact/org.apache.storm/storm-core
+libraryDependencies += "org.apache.storm" % "storm-core" % "2.2.0" % "provided"
+// libraryDependencies += "org.apache.storm" % "storm-core" % "2.2.0"
+resolvers += "clojars" at "https://clojars.org/repo"
 
 
 // https://coderwall.com/p/6gr84q/sbt-assembly-spark-and-you

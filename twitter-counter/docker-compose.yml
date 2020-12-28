@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+
+  # Storm Stack Start #
+  nimbus:
+    image: storm:2.2
+    container_name: nimbus
+    command: storm nimbus
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper
+    restart: always
+    ports:
+      - 6627:6627
+
+  supervisor:
+    image: storm:2.2
+    container_name: supervisor
+    command: storm supervisor
+    depends_on:
+      - nimbus
+      - zookeeper
+    links:
+      - nimbus
+      - zookeeper
+    restart: always
+
+  stormui:
+    image: storm:2.2
+    container_name: stormmui
+    command: storm ui
+    depends_on:
+      - nimbus
+      - zookeeper
+    links:
+      - nimbus
+      - zookeeper
+    restart: always
+    ports:
+      - 8088:8080
+
+
+  submitter:
+    image: storm:2.2
+    container_name: submitter
+    command: storm jar /code/scala-2.12/twitter-counter-assembly-0.1.jar TwitterCounter redisdb 6379 TwitterCounterTopo 
+    depends_on:
+      - nimbus
+    links:
+      - nimbus 
+    restart: on-failure
+    volumes:
+      - ./target:/code
+
+  # Storm Stack End #
+
+  redisdb:
+    image: redis
+    container_name: redisdb
+    depends_on:
+      - nimbus
+      - zookeeper
+      - supervisor
+    restart: always
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.1/16
+
